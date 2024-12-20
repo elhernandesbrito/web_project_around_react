@@ -1,5 +1,7 @@
 import React from "react";
 import trashIcon from '../../../../assets/images/Trash.png';
+import likeIcon from '../../../../assets/images/heart.jpg';
+
                    
 
 export default function Card({ card, handleOpenPopup }) {
@@ -25,23 +27,24 @@ export default function Card({ card, handleOpenPopup }) {
        onClick={() => handleOpenPopup(imageComponent)}
       />
  
-      <button
-        aria-label="Delete card"
-        className="cards__card-lixeira"
-        style={{
-          backgroundImage: `url(${trashIcon})`,
-        }}
-        type="button"
-      ></button>
+    <div className="cards__card-lixeira">
+      <img
+        src={trashIcon}
+        alt="imagem de lixeira"
+        className="cards__card-lixeira-image"
+      />
+    </div>
 
-      <div className="cards__card_interation">
-        <h5 className="cards__card-name">{name}</h5>
-        <button
-          aria-label="Like card"
-          type="button"
-          className={`cards__cardLike ${isLiked ? "cards__cardLike--liked"  : ""}`}
-        ></button>
+    <div className="cards__card_interation">
+      <h5 className="cards__card-name">{name}</h5>
+      <div className="cards__cardLike">
+          <img
+              src={likeIcon}
+              alt="imagem botão like"
+              className={`cards__cardLike-icon ${isLiked ? 'cards__cardLike-active' : ''}`}
+          />
       </div>
+    </div>
 
       <div className="cards__cardLike-wrapper">
         <span className="cards__like-counter">{likes}</span>

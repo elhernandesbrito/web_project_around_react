@@ -52,8 +52,8 @@ function Main() {
   };
 
     return (
-        <>
-         <section className="profile">
+      <>
+      <section className="profile">
 
         <div className="profile__column">
 
@@ -75,30 +75,29 @@ function Main() {
           <div className="profile__info">
             <h1 className="profile__name">Jacques Custeau</h1>
             <img
-             src={editButtonImage}
+              src={editButtonImage}
               alt="Botão editar perfil"
               className="profile__edit"
               onClick={() => handleOpenPopup(editProfilePopup)}
             />
-            <h3 className="profile__explorer">Explorar</h3>
+              <h3 className="profile__explorer">Explorar</h3>
           </div>
 
           <div className="profile__addButton">
-            <button
-              aria-label="Add card"
-              className="profile__add-button"
-              type="button"
-              onClick={() => handleOpenPopup(newCardPopup)}
-            >
-              <img 
+            <img 
               src={vectorAddImage} 
               alt="imagem botão adicionar" 
-              className="profile__addButton-cards" />
-              
-            </button>
+              className="profile__addButton-cards" 
+              onClick={() => handleOpenPopup(newCardPopup)}
+            />
           </div>
+
+          
+
         </div>
-      </section>
+    </section>
+
+
 
         <ul className="rechardCards cards__list">
           {cards.map((card) => (
