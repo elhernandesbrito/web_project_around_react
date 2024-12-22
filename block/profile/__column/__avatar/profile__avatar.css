@@ -18,7 +18,7 @@
     background-color: rgba(0, 0, 0, 0.7);
     opacity: 0;
     transition: opacity 0.3s ease;
-    z-index: 1; /* Garante que o fundo escurecido fique por cima da imagem */
+    z-index: 1;
 }
 
 .profile__avatar-container:hover::before{

@@ -10,6 +10,7 @@ import vectorAddImage from '../../assets/images/VectorAdd.png';
 import EditProfile from './components/Popup/components/EditProfile/EditProfile';
 import EditAvatar from './components/Popup/components/EditAvatar/EditAvatar';
 
+
 const cards = [
   {
     isLiked: false,
@@ -31,13 +32,12 @@ const cards = [
 
 function Main() {
   const [popup, setPopup] = useState(null);
-  const [selectedCard, setSelectedCard] = useState(null); // Novo estado
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const newCardPopup = {title: "New card", children: <NewCard />};
   const editProfilePopup = { title: "Editar perfil", children: <EditProfile /> };
   const editAvatarPopup =  { title: "Editar perfil", children: <EditAvatar /> };
-
-
+  
   const handleOpenPopup = (popup) => {
     setPopup(popup);
   };
@@ -91,14 +91,9 @@ function Main() {
               onClick={() => handleOpenPopup(newCardPopup)}
             />
           </div>
-
-          
-
         </div>
-    </section>
-
-
-
+      </section>
+      
         <ul className="rechardCards cards__list">
           {cards.map((card) => (
             <Card 

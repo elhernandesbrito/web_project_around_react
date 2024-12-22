@@ -2,7 +2,7 @@
 export default function EditAvatar() {
    
     return (
-        <form className="popupAvatarUpdate__form form" name="register" noValidate >
+        <form className="popupAvatarUpdate__form form" name="register">
             <h3 className="popupAvatarUpdate__name">Alterar a foto do perfil</h3>
             <input 
                 className="popupAvatarUpdate__form-link name-input"

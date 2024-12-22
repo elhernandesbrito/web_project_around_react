@@ -2,7 +2,7 @@
 export default function EditProfile() {
     
     return (
-        <form className="popup__form form" name="register"noValidate >
+        <form className="popup__form form" name="register">
         <h3 className="popup__EditarPerfil">Editar perfil</h3>
 
        <div className="form__input"> 

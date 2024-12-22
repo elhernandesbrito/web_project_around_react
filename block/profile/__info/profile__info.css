@@ -1,11 +1,12 @@
 .profile__info{
-    width:414px;
-    height:77px;
+    width:416px;
+    height:80px;
     color:#FFFFFF;
     margin-top:22px;
     display:grid;
     grid-template-columns:373px 24px;
     grid-template-rows:39px 38px;
+   
 }
 
 @media screen and (max-width:320px) and  (max-height:2814px) {
