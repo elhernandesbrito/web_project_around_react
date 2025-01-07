@@ -1,24 +1,38 @@
 import React from "react";
+import closeIcon from "../../../../../../assets/images/closeIcon.png";
 
 export default function ImagePopup({card, onClose}) {
     if (!card) return null;
     
-    return (
-           <div className="popup popup_opened">
-            <div className="popup__content popup__content_content_image">
-                <button
-                 aria-label="Close modal"
-                 className="popup__close"
-                 type="button"
-                 onClick={onClose}
-                />
-                <img
-          className="popup__image"
-          src={card.link}
-          alt={card.name || "Imagem ampliada"}
+   const isVertical = card.link && card.link.includes("_vertical");
+   const styles = isVertical
+   ? {width: "433px", height: "540px"}
+   : {width: "816px", height: "540px"};
+    
+   return (
+    <div className="popup__content" style={{position: "relative", ...styles}}>
+      
+      <img
+        className="popup__close-image"
+        onClick={onClose}
+        src={closeIcon} alt="Fechar popup" 
+        style={{
+          position: "absolute",
+          top: "10px",
+          right: "-40px",
+          background: "transparent",
+          border: "none",
+          cursor: "pointer",
+        }}
         />
-        <p className="popup__caption">{card.name}</p>
-      </div>
+       
+      
+      <img
+        className="popup__image"
+        src={card.link}
+        alt={card.name || "Imagem ampliada"}
+      />
+      <p className="popup__caption">{card.name}</p>
     </div>
   );
 }

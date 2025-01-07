@@ -1,31 +1,18 @@
 import React from "react";
 import trashIcon from '../../../../assets/images/Trash.png';
 import likeIcon from '../../../../assets/images/heart.jpg';
-
                    
 
-export default function Card({ card, handleOpenPopup }) {
+export default function Card({ card, onClick }) {
   const {name, link, isLiked, likes = 0} = card;
   
-    const imageComponent = {
-      title: name,
-      children: (
-        <img
-        className = "popup__image"
-        src={link}
-        alt={name || "Imagem ampliada"}
-      />
-      ),
-    }
-
-    return (
+     return (
     <li className="cards__card">
         <img
           className="cards__card-img"
           src={link || ""}
           alt={name || "Imagem do card"}
-        onClick={() => handleOpenPopup(imageComponent)}
-        />
+        onClick={onClick} />
   
       <div className="cards__card-lixeira">
         <img

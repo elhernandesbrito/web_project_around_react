@@ -1,0 +1,69 @@
+.cards__card-img {
+    margin-top: 0;
+    margin-bottom: 25px;
+    width: 282px;
+    height: 282px;
+    border-radius: 10px 10px 0 0;
+    object-fit: cover;
+}
+
+.cards__card-lixeira {
+    width: 18px;
+    height: 19.3px;
+    top: 18px;
+    left: 249px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.cards__card_interation {
+    display: grid;
+    grid-template-columns: 225px 21px;
+    grid-template-rows: 45px;
+    column-gap: 18px;
+    width: 280px;
+    height: 30px;
+    margin-top: 0;
+    margin-left: 0;
+}
+
+.cards__cardLike-wrapper {
+    display: flex;
+}
+
+.cards__card-name {
+    width: 221px;
+    height: 30px;
+    margin-top: 0;
+    margin-left: 21px;
+    font-family: Inter, sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    text-overflow: ellipsis;
+    color: #000000;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.cards__cardLike {
+    background: url(https://practicum-content.s3.us-west-1.amazonaws.com/web-code/dom/moved_heart.svg);
+    width: 24px;
+    height: 22px;
+    margin-left: 4px;
+    margin-top: 5px;
+    cursor: pointer;
+    display: flex;
+}
+
+.cards__cardLike:hover {
+    opacity: 50%;
+}
+
+.cards__cardLike_active {
+    background: url(https://practicum-content.s3.us-west-1.amazonaws.com/web-code/dom/moved_heart-filled.svg);
+}
+
+.cards__like-counter {
+    color: #000;
+    margin-left: 255px;
+}
