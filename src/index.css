@@ -1,13 +1,10 @@
 @import url(../block/page/page.css);
 @import url(../block/header/header.css);
 @import url(../block/profile/profile.css);
-@import url(../block/profile/profile-elements/profile-elements.css);
 @import url(../block/cards/cards.css);
-@import url(../block/cards/card-elements/cards-elements.css);
 @import url(../block/rechardCards/rechardCards.css);
 @import url(../block/popup/popup.css);
-@import url(../block/popup/popup-elements/popup-elements.css);
-@import url(../block/popupCards/popupCards-elements/popupCards-elements.css);
-@import url(../block/popupWithConfirmation/popupWithConfirmation-elements/popupWithConfirmation-elements.css);
-@import url(../block/popupAvatarUpdate/popupAvatarUpdate-elements/popupAvatarUpdate-elements.css);
+@import url(../block/popupCards/popupCards.css);
+@import url(../block/popupWithConfirmation/popupWithConfirmation.css);
+@import url(../block/popupAvatarUpdate/popupAvatarUpdate.css);
 @import url(../block/footer/footer.css)
