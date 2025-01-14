@@ -1,12 +1,14 @@
 footer {
     margin-top: 860px;
-    width: 880px;
-    margin-left: 200px;
+    width: 100%;
+    max-width: 880px;
+    margin: 40px auto 0;
+    box-sizing: border-box;
 }
 
 .copyright {
     margin-top:0;
-    width: 318px;
+    max-width: 318px;
     height: 18px;
     line-height: 21.78px;
     font-weight: 400px;

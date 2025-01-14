@@ -1,19 +1,19 @@
 .cards {
-    width: 880px;
-    height: 743px;
-    margin-top: 40px;
-    margin-left: 200px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+    grid-template-rows: auto;
     column-gap: 17px;
     row-gap: 21px;
-    position: absolute;
+    width: 100%;
+    max-width: 880px;
+    margin: 40px auto;
+    position: relative;
 }
 
 .cards__card {
-    width: 282px;
-    height: 361px;
+    width: 100%;
+    max-width: 282px;
+    height: auto;
     border-radius: 10px;
     background-color: #FFFFFF;
     position: relative;
@@ -28,17 +28,7 @@
 }
 
 @media screen and (max-width: 320px) and (max-height: 2814px) {
-    .cards {
-        width: 282px;
-        height: 2266px;
-        margin-top: 36px;
-        margin-left: 19px;
-        grid-template-columns: repeat(1, 1fr);
-        grid-template-rows: repeat(6, 1fr);
-        column-gap: 0;
-        row-gap: 0;
-    }
-
+  
     .cards__card {
         width: 282px;
         height: 361px;
@@ -48,7 +38,8 @@
 .cards__card-img {
     margin-top: 0;
     margin-bottom: 25px;
-    width: 282px;
+    width: 100%;
+    max-width: 282px;
     height: 282px;
     border-radius: 10px 10px 0 0;
     object-fit: cover;

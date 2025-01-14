@@ -1,40 +1,45 @@
 .profile {
-    width: 880px;
+    width: 100%;
+    max-width: 880px;
     height: 120px;
     margin: 40px auto 0;
-    display: flex;
+    display: flex;  
     color: #FFFFFF;
 }
 
 @media screen and (max-width: 320px) and (max-height: 2814px) {
     .profile {
-        width: 282px;
+        width:100%;
+        max-width:282px;
         height: 286px;
         margin-top: 40px;
-        margin-left: 19px;
+        margin-left: auto;
+     }
+}
+
+    .profile__addButton {
+        width:100%;
+        max-width: 150px;
+        height:50px;
+        border:2px solid #FFFFFF;
+        color:#FFFFFF;
+        background:#000000;
+        margin-top:35px;
+        cursor: pointer;
+        
     }
-}
 
-.profile__addButton {
-    width:150px;
-    height:50px;
-    border:2px solid #FFFFFF;
-    color:#FFFFFF;
-    background:#000000;
-    margin-top:35px;
-    cursor: pointer;
-}
-
-.profile__addButton-cards {
-    width: 22px;
-    height: 22px;
-    margin-left: 64px;
-    margin-top: 14px;
-}
+    .profile__addButton-cards {
+        width: 22px;
+        height: 22px;
+        margin-left: 64px;
+        margin-top: 14px;
+    }
 
 @media screen and (max-width: 320px) and (max-height: 2814px) {
     .profile__addButton {
-        width: 282px;
+        width: 100%;
+        max-width:282px;
         height: 50px;
         margin-top: 0;
     }

@@ -26,6 +26,7 @@ const cards = [
     owner: "5d1f0611d321eb4bdcd707dd",
     createdAt: "2019-07-05T08:11:58.324Z",
   },
+
 ];
 
 function Main() {
@@ -74,6 +75,7 @@ function Main() {
         </div>
       </section>
 
+      <div className="rechardCards">
       <ul className="rechardCards cards__list">
         {cards.map((card) => (
           <Card
@@ -89,6 +91,7 @@ function Main() {
           />
         ))}
       </ul>
+      </div>
 
       {popup && (
         <Popup
