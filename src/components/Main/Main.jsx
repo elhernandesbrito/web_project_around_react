@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+
 import Popup from "./components/Popup/Popup";
 import NewCard from "./components/Popup/components/NewCard/NewCard";
 import Card from "./components/Card/Card.jsx";
@@ -8,43 +9,55 @@ import editButtonImage from "../../assets/images/EditButton.png";
 import vectorAddImage from "../../assets/images/VectorAdd.png";
 import EditProfile from "./components/Popup/components/EditProfile/EditProfile";
 import EditAvatar from "./components/Popup/components/EditAvatar/EditAvatar";
-
-const cards = [
-  {
-    isLiked: false,
-    _id: "5d1f0611d321eb4bdcd707dd",
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
-    owner: "5d1f0611d321eb4bdcd707dd",
-    createdAt: "2019-07-05T08:10:57.741Z",
-  },
-  {
-    isLiked: false,
-    _id: "5d1f064ed321eb4bdcd707de",
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
-    owner: "5d1f0611d321eb4bdcd707dd",
-    createdAt: "2019-07-05T08:11:58.324Z",
-  },
-
-];
+import api from "../../utils/api.js";
+import currentUserContext from "../../contexts/CurrentUserContext.js";
 
 function Main() {
+  const [cards, setCards] = useState([]);
   const [popup, setPopup] = useState(null);
+  const currentUser = useContext(currentUserContext);
 
   const newCardPopup = { title: "New card", children: <NewCard /> };
   const editProfilePopup = { title: "Editar perfil", children: <EditProfile /> };
   const editAvatarPopup = { title: "Alterar a foto do perfil", children: <EditAvatar /> };
 
+  useEffect(() => {
+    api.getInitialCards()
+      .then((cardsData) => {
+        setCards(cardsData);
+      })
+      .catch((err) => console.error(`Erro ao buscar cartões: ${err}`));
+  }, []);
+
   const handleOpenPopup = (popupData) => setPopup(popupData);
   const handleClosePopup = () => setPopup(null);
+
+
+  const handleLikeClick = (card) => {
+ 
+  const isLiked = Array.isArray(card.likes) && card.likes.some(user => user._id === currentUser._id)
+
+    const apiCall = isLiked ? api.unlikeCard(card._id) : api.likeCard(card._id);
+
+    apiCall
+      .then((updatedCard) => {
+        setCards((prevCards) =>
+          prevCards.map((c) => (c._id === card._id ? updatedCard : c))
+        );
+      })
+      .catch((err) => console.error(`Erro ao atualizar curtida: ${err}`));
+  };
 
   return (
     <>
       <section className="profile">
         <div className="profile__column">
           <div className="profile__avatar-container">
-            <img src={avatarImage} alt="imagem avatar" className="profile__avatar" />
+            <img 
+              src={currentUser.avatar || ""} 
+              alt="imagem avatar" 
+              className="profile__avatar" 
+            />
             <img
               src={editButtonImage}
               alt="Botão editar avatar"
@@ -54,14 +67,14 @@ function Main() {
           </div>
 
           <div className="profile__info">
-            <h1 className="profile__name">Jacques Custeau</h1>
+            <h1 className="profile__name">{currentUser.name || "Carregando... "}</h1>
             <img
               src={editButtonImage}
               alt="Botão editar perfil"
               className="profile__edit"
               onClick={() => handleOpenPopup(editProfilePopup)}
             />
-            <h3 className="profile__explorer">Explorar</h3>
+            <h3 className="profile__explorer">{currentUser.about || "Carregando..."}</h3>
           </div>
 
           <div className="profile__addButton">
@@ -76,21 +89,22 @@ function Main() {
       </section>
 
       <div className="rechardCards">
-      <ul className="rechardCards cards__list">
-        {cards.map((card) => (
-          <Card
-            key={card._id}
-            card={card}
-            onClick={() =>
-              handleOpenPopup({
-                title: null,
-                children: <ImagePopup card={card} onClose={handleClosePopup} />,
-                hideCloseButton: true,
-              })
-            }
-          />
-        ))}
-      </ul>
+        <ul className="rechardCards cards__list">
+          {cards.map((card) => (
+            <Card
+              key={card._id}
+              card={card}
+              onClick={() =>
+                handleOpenPopup({
+                  title: null,
+                  children: <ImagePopup card={card} onClose={handleClosePopup} />,
+                  hideCloseButton: true,
+                })
+              }
+              onLikeClick={handleLikeClick} 
+            />
+          ))}
+        </ul>
       </div>
 
       {popup && (

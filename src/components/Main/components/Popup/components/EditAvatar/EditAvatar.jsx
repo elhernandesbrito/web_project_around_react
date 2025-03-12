@@ -9,7 +9,7 @@ export default function EditAvatar() {
                     type="url" 
                     name="link" 
                     placeholder="Link da imagem" 
-                require/>
+                required/>
                     <span className="form-input-error form__input-link popupAvatarUpdate__form-link-error"></span>
                 <button 
                     type="submit" 
