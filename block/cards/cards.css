@@ -84,7 +84,9 @@
 }
 
 .cards__cardLike {
-      width: 24px;
+  
+   background: url(https://practicum-content.s3.us-west-1.amazonaws.com/web-code/dom/moved_heart.svg);
+    width: 24px;
     height: 22px;
     margin-left: 4px;
     margin-top: 5px;

@@ -1,19 +1,15 @@
 import React, {useContext} from "react";
-import CurrentUserContext from "../../../../contexts/CurrentUserContext.js";
+import currentUserContext from "../../../../contexts/CurrentUserContext.js";
 import trashIcon from '../../../../assets/images/Trash.png';
 import likeIcon from '../../../../assets/images/heart.jpg';
 import heartActiveIcon from '../../../../assets/images/heart_active.jpg';                 
 
 export default function Card({ card, onClick, onLikeClick }) {
   const {name, link, likes = [] } = card;
-  const currentUser = useContext(CurrentUserContext);
+  const currentUser = useContext(currentUserContext);
 
-  //const isLiked = likes.some(user => user._id === currentUser._id);
-  const isLiked = Array.isArray(likes) && likes.some(user => user._id === currentUser?._id);
-
-  const cardLikeButtonClassName = `cards__cardLike ${isLiked ? 'cards__cardLike_active' : ''}`;
-
-                 
+  const isLiked = card.likes?.some(user => user._id === currentUser?._id);
+                  
      return (
     <li className="cards__card">
         <img
@@ -32,9 +28,11 @@ export default function Card({ card, onClick, onLikeClick }) {
 
       <div className="cards__card_interation">
         <h5 className="cards__card-name">{name}</h5>
-        <div className={cardLikeButtonClassName} onClick={() => onLikeClick(card)}>
-          <img src={isLiked ? heartActiveIcon : likeIcon} alt="imagem botão like ativo" />
-        </div>
+        
+        <div
+          className={`cards__cardLike ${isLiked ? "cards__cardLike_active" : ""}`} 
+          onClick={() => onLikeClick(card)}
+        />
       </div>
 
         <div className="cards__cardLike-wrapper">

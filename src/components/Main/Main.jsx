@@ -23,23 +23,16 @@ function Main() {
 
   useEffect(() => {
     api.getInitialCards()
-      .then((cardsData) => {
-        setCards(cardsData);
-      })
+      .then(setCards)
       .catch((err) => console.error(`Erro ao buscar cartões: ${err}`));
   }, []);
 
   const handleOpenPopup = (popupData) => setPopup(popupData);
   const handleClosePopup = () => setPopup(null);
 
-
   const handleLikeClick = (card) => {
- 
-  const isLiked = Array.isArray(card.likes) && card.likes.some(user => user._id === currentUser._id)
-
-    const apiCall = isLiked ? api.unlikeCard(card._id) : api.likeCard(card._id);
-
-    apiCall
+    const isLiked = card.likes?.some(user => user._id === currentUser?._id);
+    api[isLiked ? "unlikeCard" : "likeCard"](card._id)
       .then((updatedCard) => {
         setCards((prevCards) =>
           prevCards.map((c) => (c._id === card._id ? updatedCard : c))
@@ -47,6 +40,7 @@ function Main() {
       })
       .catch((err) => console.error(`Erro ao atualizar curtida: ${err}`));
   };
+
 
   return (
     <>
