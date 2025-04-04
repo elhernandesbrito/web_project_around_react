@@ -8,8 +8,9 @@ export default function Card({ card, onClick, onLikeClick }) {
   const {name, link, likes = [] } = card;
   const currentUser = useContext(currentUserContext);
 
-  const isLiked = card.likes?.some(user => user._id === currentUser?._id);
-                  
+  //const isLiked = card.likes?.some(user => user._id === currentUser?._id);
+  const isLiked = card.isLiked;
+ 
      return (
     <li className="cards__card">
         <img
@@ -29,10 +30,12 @@ export default function Card({ card, onClick, onLikeClick }) {
       <div className="cards__card_interation">
         <h5 className="cards__card-name">{name}</h5>
         
-        <div
-          className={`cards__cardLike ${isLiked ? "cards__cardLike_active" : ""}`} 
-          onClick={() => onLikeClick(card)}
-        />
+      <div
+        className={`cards__cardLike ${isLiked ? "cards__cardLike_active" : ""}`}  
+        onClick={() => onLikeClick(card)}
+      />
+
+
       </div>
 
         <div className="cards__cardLike-wrapper">

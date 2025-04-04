@@ -23,7 +23,10 @@ function Main() {
 
   useEffect(() => {
     api.getInitialCards()
-      .then(setCards)
+      .then((cards) => {
+        console.log("Cartões iniciais carregados:", cards);
+        setCards(cards);
+      })
       .catch((err) => console.error(`Erro ao buscar cartões: ${err}`));
   }, []);
 
@@ -31,21 +34,22 @@ function Main() {
   const handleClosePopup = () => setPopup(null);
 
   const handleLikeClick = (card) => {
- 
-  const isLiked = card.isLiked !== undefined ? card.isLiked : card.likes?.some(user => user._id === currentUser?._id);
-  
+    console.log("Like clicado no card:", card);
+    
+    const isLiked = card.isLiked !== undefined ? card.isLiked : card.likes?.some(user => user._id === currentUser?._id);
+    console.log("O card já está curtido?", isLiked);
+    
     api[isLiked ? "unlikeCard" : "likeCard"](card._id)
       .then((updatedCard) => {
-     
+        console.log("Resposta da API ao curtir/descurtir:", updatedCard);
         setCards((prevCards) =>
           prevCards.map((c) => 
-            c._id === card._id ? updatedCard : c
+            c._id === card._id ? updatedCard : c // Substitui pelo objeto atualizado
           )
         );
       })
       .catch((err) => console.error(`Erro ao atualizar curtida: ${err}`));
   };
-
 
   return (
     <>
