@@ -50,21 +50,9 @@ function Main() {
     setSelectedCard(card);
   };
 
-  /*async function handleCardLike(card) {
-    const isLiked = card.likes.some(like => like._id === currentUser._id);
-
-    await api.changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        setCards((state) =>
-          state.map((currentCard) =>
-            currentCard._id === card._id ? newCard : currentCard
-          )
-        );
-      })
-      .catch((error) => console.error(error));
-  }*/
+ 
       function handleCardLike(card) {
-        // Protege contra casos onde card.likes está undefined
+      
         const isLiked = Array.isArray(card.likes) && card.likes.some((like) => like._id === currentUser._id);
        
         api.changeLikeCardStatus(card._id, !isLiked)
