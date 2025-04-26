@@ -11,7 +11,7 @@ export default function Popup({ title, children, onClose }) {
         className="popup__closeButton"
         onClick={onClose}
       />
-      <div className="popup__content">
+      <div className="popup__content ">
         {children}
       </div>
     </section>

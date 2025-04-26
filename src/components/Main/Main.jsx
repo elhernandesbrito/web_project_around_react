@@ -3,40 +3,39 @@ import React, {useState} from 'react';
 import Popup from './components/Popup/Popup';
 import NewCard from './components/Popup/components/NewCard/NewCard';
 import Card from './components/Card/Card.jsx';
-import ImagemPopup from "./components/Popup/components/ImagePopup/ImagePopup";
 import avatarImage from '../../assets/images/avatar.jpg';
 import editButtonImage from '../../assets/images/EditButton.png';
 import vectorAddImage from '../../assets/images/VectorAdd.png';
 import EditProfile from './components/Popup/components/EditProfile/EditProfile';
 import EditAvatar from './components/Popup/components/EditAvatar/EditAvatar';
+import api from '../../utils/api.js';
+import { useEffect, useContext } from 'react';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 
-const cards = [
-  {
-    isLiked: false,
-    _id: '5d1f0611d321eb4bdcd707dd',
-    name: 'Yosemite Valley',
-    link: 'https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg',
-    owner: '5d1f0611d321eb4bdcd707dd',
-    createdAt: '2019-07-05T08:10:57.741Z',
-  },
-  {
-    isLiked: false,
-    _id: '5d1f064ed321eb4bdcd707de',
-    name: 'Lake Louise',
-    link: 'https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg',
-    owner: '5d1f0611d321eb4bdcd707dd',
-    createdAt: '2019-07-05T08:11:58.324Z',
-  },
-];
+
 
 function Main() {
   const [popup, setPopup] = useState(null);
+  const [cards, setCards] = useState([]);
+  const currentUser = useContext(CurrentUserContext);
+
+  useEffect(() => {
+    api.getInitialCards()
+      .then((cardsData) => {
+        setCards(cardsData);
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar os cards:", err);
+      });
+  }, []);
+  
+
   const [selectedCard, setSelectedCard] = useState(null);
 
   const newCardPopup = {title: "New card", children: <NewCard />};
   const editProfilePopup = { title: "Editar perfil", children: <EditProfile /> };
-  const editAvatarPopup =  { title: "Editar perfil", children: <EditAvatar /> };
+  const editAvatarPopup =  { title: "Alterar a foto do perfil", children: <EditAvatar /> };
   
   const handleOpenPopup = (popup) => {
     setPopup(popup);
@@ -51,6 +50,37 @@ function Main() {
     setSelectedCard(card);
   };
 
+  /*async function handleCardLike(card) {
+    const isLiked = card.likes.some(like => like._id === currentUser._id);
+
+    await api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((currentCard) =>
+            currentCard._id === card._id ? newCard : currentCard
+          )
+        );
+      })
+      .catch((error) => console.error(error));
+  }*/
+      function handleCardLike(card) {
+        // Protege contra casos onde card.likes está undefined
+        const isLiked = Array.isArray(card.likes) && card.likes.some((like) => like._id === currentUser._id);
+       
+        api.changeLikeCardStatus(card._id, !isLiked)
+          .then((newCard) => {
+            
+            if (!newCard.likes) {
+              console.warn("O card retornado da API não possui 'likes'", newCard);
+            }
+            setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+          })
+          .catch((err) => {
+            console.error("Erro ao tentar curtir/descurtir o card:", err);
+          });
+      }
+      
+  
     return (
       <>
       <section className="profile">
@@ -59,7 +89,7 @@ function Main() {
 
           <div className="profile__avatar-container">
             <img 
-            src={avatarImage}
+            src={currentUser.avatar}
             alt="imagem avatar" 
             className="profile__avatar" />
             
@@ -73,14 +103,14 @@ function Main() {
           </div>
 
           <div className="profile__info">
-            <h1 className="profile__name">Jacques Custeau</h1>
+          <h1 className="profile__name">{currentUser.name}</h1>
             <img
               src={editButtonImage}
               alt="Botão editar perfil"
               className="profile__edit"
               onClick={() => handleOpenPopup(editProfilePopup)}
             />
-              <h3 className="profile__explorer">Explorar</h3>
+              <h3 className="profile__explorer">{currentUser.about}</h3>
           </div>
 
           <div className="profile__addButton">
@@ -101,6 +131,7 @@ function Main() {
             card={card} 
             onImageClick={handleCardClick}
             handleOpenPopup = {handleOpenPopup}
+            onCardLike={handleCardLike}
              />
           ))}
         </ul>
@@ -112,7 +143,7 @@ function Main() {
       )}
 
         {selectedCard && (
-          <ImagemPopup card={selectedCard} onClose={handleClosePopup} />
+          <ImagePopup card={selectedCard} onClose={handleClosePopup} />
         )}
       </>
     );

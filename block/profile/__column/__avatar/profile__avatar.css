@@ -6,6 +6,8 @@
     height: 120px;
     border-radius: 50%;
     overflow: hidden;
+    align-content: center;
+    
 }
 
 .profile__avatar-container::before {
@@ -46,15 +48,24 @@
     height:100%;
     border-radius:50%;
     cursor: pointer;
+    
 }
 
 @media screen and (max-width:320px) and  (max-height:2814px) {
-    .profile__avatar {
-        width:120px;
-        height:120px;
-        margin-left:81px;
-        border-radius:60%;
-        margin-bottom:0;
-        padding-bottom:0;
-    }
+  .profile__avatar-container {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    margin: 0 auto;
+    width: 120px;
+    height:120px;
+  }
+
+  .profile__editAvatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  
+
 }
