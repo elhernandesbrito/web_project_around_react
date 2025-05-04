@@ -19,13 +19,7 @@ export default function ConfirmDelete({ onConfirm, onClose }) {
             >
               Sim
             </button>
-            <button
-              type="button"
-              className="popup__submit-save"
-              onClick={onClose}
-            >
-              Não
-            </button>
+            
           </div>
         </form>
       );
