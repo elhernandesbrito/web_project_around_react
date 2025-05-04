@@ -1,23 +1,15 @@
 import React from "react";
 import trashIcon from '../../../../assets/images/Trash.png';
-import likeIcon from '../../../../assets/images/heart.jpg';
 import ImagePopup from '../Popup/components/ImagePopup/ImagePopup';
-import { useContext } from 'react';
-import CurrentUserContext from '../../../../contexts/CurrentUserContext'
+
                    
 
-export default function Card({ card, handleOpenPopup, onCardLike  }) {
-
-  const {name, link, likes = 0} = card;
-  
-  const currentUser = useContext(CurrentUserContext);
-  //const isLiked = card.likes.some(like => like._id === currentUser._id);
-  const isLiked = (card.likes || []).some(like => like._id === currentUser._id);
-
-  const cardLikeButtonClassName = `cards__cardLike ${isLiked ? 'cards__cardLike_active' : ''}`;
-
+export default function Card({ card, handleOpenPopup, onCardLike, isLiked, onCardDelete  }) {
+  const { name, link } = card;
 
   
+    const cardLikeButtonClassName = `cards__cardLike ${isLiked ? 'cards__cardLike_active' : ''}`;
+
     const imageComponent = {
       title: name,
       children: <ImagePopup card={card} />
@@ -26,6 +18,10 @@ export default function Card({ card, handleOpenPopup, onCardLike  }) {
     const handleLikeClick = () => {
       onCardLike(card);
     };
+
+    const handleDeleteClick = () => {
+      onCardDelete(card);
+    }
   
 
     return (
@@ -42,6 +38,7 @@ export default function Card({ card, handleOpenPopup, onCardLike  }) {
           src={trashIcon}
           alt="imagem de lixeira"
           className="cards__card-lixeira-image"
+          onClick={handleDeleteClick}
         />
       </div>
 
@@ -53,7 +50,7 @@ export default function Card({ card, handleOpenPopup, onCardLike  }) {
       </div>
 
       <div className="cards__cardLike-wrapper">
-         <span className="cards__like-counter">{likes.length}</span>
+         <span className="cards__like-counter">{isLiked ? 1: 0}</span>
       </div>
     </li>
   );

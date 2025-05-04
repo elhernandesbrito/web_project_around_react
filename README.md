@@ -1,27 +1,42 @@
-O projeto "Design EUA Afora" está passando por uma transição tecnológica, migrando para o React com a utilização da ferramenta Vite.
 
-Um novo repositório foi criado contendo:
+Nesta etapa do projeto, desenvolvemos uma aplicação React completa para exibição, criação, curtir e exclusão de cartões com imagens, além da edição de perfil e avatar do usuário.
+Abaixo estão os principais conceitos, ferramentas e funcionalidades abordados:
 
-Instalação do framework React;
+* Organização e Centralização de Requisições
 
-Configuração das dependências;
+ - Criação do arquivo api.js dentro da pasta src/utils, responsável por centralizar todas as interações com a API externa.
+ - Instanciamos e exportamos diretamente a classe Api, configurada com a URL base e o token de autenticação.
 
-Definição da porta do servidor.
+* Gerenciamento de Estado e Dados com React
+ - Inicialização do estado cards no componente Main, posteriormente elevado para App para controle centralizado.
+ - Uso do useEffect para buscar os dados dos cartões e do usuário atual ao carregar a aplicação.
 
-O código HTML original foi transferido e convertido para o formato JSX, seguindo as boas práticas de desenvolvimento no React.
+* Uso de Contexto Global
+ - Implementação do CurrentUserContext para disponibilizar os dados do usuário atual em toda a aplicação.
+ - Envolvimento do componente App com o Provider, permitindo acesso ao usuário em componentes como Main, Card, EditProfile e EditAvatar.
 
-Criação de Componentes Individuais para os Popups:
+* Funcionalidade de Curtidas e Exclusão de Cartões
+ - Criação das funções handleCardLike e handleCardDelete para envio de requisições de curtir/descurtir e exclusão.
+ - Uso do método filter() para atualizar a lista de cartões após uma exclusão.
+ - Identificação visual de cartões curtidos por meio da prop isLiked.
 
-Cada popup existente foi transformado em um componente React individualizado, garantindo melhor organização e separação do código.
+ * Edição de Perfil
+ - Componente EditProfile com campos controlados (componentes controlados via useState).
+ - Envio dos dados de edição via handleUpdateUser, atualizando tanto o backend quanto o estado global currentUser.
+ - Implementação da lógica para fechamento automático do popup após o envio.
+ 
+* Edição de Avatar
+ - Uso de ref para acessar diretamente o valor do campo de entrada.
+ - Manipulador handleUpdateAvatar para atualização do avatar via API e do estado local.
 
-Transferência de Estilos e Recursos:
+*Adição de Novos Cartões
+ - Criação do componente NewCard com formulário para adicionar novas imagens e títulos.
+ - A função handleAddPlaceSubmit atualiza a lista de cartões local com o novo card no topo.
+ - Estado cards elevado para App para garantir que o novo cartão apareça instantaneamente na interface.
 
-As pastas contendo os estilos (CSS) foram migradas para a nova estrutura.
+ ** Boas Práticas Adotadas
+Separação de responsabilidades entre componentes.
 
-A pasta de imagens foi transferida, respeitando a padronização dos arquivos e diretórios no React.
+Componentes reutilizáveis e focados em uma única tarefa.
 
-Com essa migração:
-
-Foi possível individualizar cada popup em componentes reutilizáveis, o que facilita sua manutenção e evolução.
-A nova estrutura oferece maior versatilidade para expansão do projeto, permitindo a reutilização dos popups em diferentes partes da aplicação.
-A organização do código melhora a escalabilidade e manutenção do projeto, tornando-o preparado para futuras implementações.
+Atualizações de estado reativas que mantêm a interface sincronizada com a API.

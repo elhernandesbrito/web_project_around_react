@@ -11,7 +11,6 @@ class Api {
       return Promise.reject(`Erro: ${res.status}`);
     }
   
-    // Obter os dados dos cards
     getInitialCards() {
       return fetch(`${this._baseUrl}/cards`, {
         headers: this._headers
@@ -19,7 +18,6 @@ class Api {
         .catch(err => console.error(err));
     }
   
-    // Obter informações do usuário
     getUserInfo() {
       return fetch(`${this._baseUrl}/users/me`, {
         headers: this._headers
@@ -27,7 +25,6 @@ class Api {
         .catch(err => console.error(err));
     }
   
-    // Atualizar informações do usuário
     updateUserInfo(data) {
       return fetch(`${this._baseUrl}/users/me`, {
         method: 'PATCH',
@@ -40,7 +37,6 @@ class Api {
         .catch(err => console.error(err));
     }
   
-    // Adicionar novo cartão
     addNewCard(data) {
       return fetch(`${this._baseUrl}/cards`, {
         method: 'POST',
@@ -53,7 +49,6 @@ class Api {
         .catch(err => console.error(err));
     }
   
-    // Excluir cartão
     deleteCard(cardId) {
       return fetch(`${this._baseUrl}/cards/${cardId}`, {
         method: 'DELETE',
@@ -62,7 +57,6 @@ class Api {
         .catch(err => console.error(err));
     }
   
-    // Curtir cartão
     likeCard(cardId) {
       return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
         method: 'PUT',
@@ -71,7 +65,6 @@ class Api {
         .catch(err => console.error(err));
     }
   
-    // Remover curtida
     unlikeCard(cardId) {
       return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
         method: 'DELETE',
@@ -80,7 +73,6 @@ class Api {
         .catch(err => console.error(err));
     }
   
-    // Atualizar avatar
     updateAvatar(data) {
       return fetch(`${this._baseUrl}/users/me/avatar`, {
         method: 'PATCH',
@@ -101,7 +93,6 @@ class Api {
     
   }    
   
-  // Criar e exportar a instância da API
   const api = new Api({
     baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",
     headers: {

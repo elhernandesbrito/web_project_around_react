@@ -1,74 +1,51 @@
 
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Popup from './components/Popup/Popup';
 import NewCard from './components/Popup/components/NewCard/NewCard';
 import Card from './components/Card/Card.jsx';
-import avatarImage from '../../assets/images/avatar.jpg';
 import editButtonImage from '../../assets/images/EditButton.png';
 import vectorAddImage from '../../assets/images/VectorAdd.png';
 import EditProfile from './components/Popup/components/EditProfile/EditProfile';
 import EditAvatar from './components/Popup/components/EditAvatar/EditAvatar';
-import api from '../../utils/api.js';
-import { useEffect, useContext } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
+import ConfirmDelete from './components/Popup/components/ConfirmDelete/ConfirmDelete.jsx';
 
 
+function Main({popup, onOpenPopup, onClosePopup, cards, onCardLike, onCardDelete, onAddPlaceSubmit}) {
 
-
-function Main() {
-  const [popup, setPopup] = useState(null);
-  const [cards, setCards] = useState([]);
-  const currentUser = useContext(CurrentUserContext);
-
-  useEffect(() => {
-    api.getInitialCards()
-      .then((cardsData) => {
-        setCards(cardsData);
-      })
-      .catch((err) => {
-        console.error("Erro ao buscar os cards:", err);
-      });
-  }, []);
   
-
+  const {currentUser} = useContext(CurrentUserContext);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [cardToDelete, setCardToDelete] = useState(null);
 
-  const newCardPopup = {title: "New card", children: <NewCard />};
+
+  const newCardPopup = {title: "New card", children: <NewCard onAddPlaceSubmit={onAddPlaceSubmit} />};
   const editProfilePopup = { title: "Editar perfil", children: <EditProfile /> };
   const editAvatarPopup =  { title: "Alterar a foto do perfil", children: <EditAvatar /> };
-  
-  const handleOpenPopup = (popup) => {
-    setPopup(popup);
-  };
 
-  const handleClosePopup = () => {
-    setPopup(null);
-    setSelectedCard(null); 
-  };
 
   const handleCardClick = (card) => {
-    setSelectedCard(card);
+       setSelectedCard(card);
   };
 
- 
-      function handleCardLike(card) {
-      
-        const isLiked = Array.isArray(card.likes) && card.likes.some((like) => like._id === currentUser._id);
-       
-        api.changeLikeCardStatus(card._id, !isLiked)
-          .then((newCard) => {
-            
-            if (!newCard.likes) {
-              console.warn("O card retornado da API não possui 'likes'", newCard);
-            }
-            setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-          })
-          .catch((err) => {
-            console.error("Erro ao tentar curtir/descurtir o card:", err);
-          });
-      }
-      
+  const handleRequestDelete = (card) => {
+    setCardToDelete(card);
+  };
+
+  const handleConfirmDelete = () => {
+    if (cardToDelete) {
+      onCardDelete(cardToDelete);
+      setCardToDelete(null);
+    }
+  };
+
+  const handleCloseAllPopups = () => {
+    onClosePopup();       
+    setSelectedCard(null);
+    setCardToDelete(null); 
+  };
   
+
     return (
       <>
       <section className="profile">
@@ -85,7 +62,7 @@ function Main() {
             src={editButtonImage} 
             alt="Botão editar avatar" 
             className="profile__editAvatar" 
-            onClick={() => handleOpenPopup(editAvatarPopup)}
+            onClick={() => onOpenPopup(editAvatarPopup)}
             />
             
           </div>
@@ -96,7 +73,7 @@ function Main() {
               src={editButtonImage}
               alt="Botão editar perfil"
               className="profile__edit"
-              onClick={() => handleOpenPopup(editProfilePopup)}
+              onClick={() => onOpenPopup(editProfilePopup)}
             />
               <h3 className="profile__explorer">{currentUser.about}</h3>
           </div>
@@ -106,35 +83,49 @@ function Main() {
               src={vectorAddImage} 
               alt="imagem botão adicionar" 
               className="profile__addButton-cards" 
-              onClick={() => handleOpenPopup(newCardPopup)}
+              onClick={() => onOpenPopup(newCardPopup)}
             />
           </div>
         </div>
       </section>
       
-        <ul className="rechardCards cards__list">
-          {cards.map((card) => (
-            <Card 
-            key={card._id} 
-            card={card} 
-            onImageClick={handleCardClick}
-            handleOpenPopup = {handleOpenPopup}
-            onCardLike={handleCardLike}
-             />
-          ))}
-        </ul>
+      <ul className="rechardCards cards__list">
+        {cards.map((card) => (
+          <Card 
+            key={card._id}
+            card={card}
+            onCardClick={handleCardClick}
+            handleOpenPopup={onOpenPopup}
+            onCardLike={onCardLike}
+            onCardDelete={handleRequestDelete}
+            isLiked={card.isLiked}
+          />
+        ))}
+      </ul>
 
       {popup && (
-        <Popup onClose={handleClosePopup} title={popup.title}>
+        <Popup onClose={handleCloseAllPopups} title={popup.title}>
           {popup.children}
         </Popup>
       )}
 
-        {selectedCard && (
-          <ImagePopup card={selectedCard} onClose={handleClosePopup} />
-        )}
-      </>
-    );
+    {selectedCard && (
+      <Popup onClose={handleCloseAllPopups}>
+        <ImagePopup card={selectedCard} />
+      </Popup>
+    )}
+    
+    {cardToDelete && (
+      <Popup onClose={handleCloseAllPopups} title="Confirmação">
+        <ConfirmDelete 
+          onConfirm={handleConfirmDelete} 
+          onClose={handleCloseAllPopups}
+        />
+      </Popup>
+    )}
+
+    </>
+   );
 };
 
 export default Main;

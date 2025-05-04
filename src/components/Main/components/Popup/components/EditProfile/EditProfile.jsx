@@ -1,8 +1,34 @@
 
+import { useState, useContext, useEffect } from 'react';
+import CurrentUserContext from '../../../../../../contexts/CurrentUserContext'; 
+
+
 export default function EditProfile() {
+    const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+
+    useEffect(() => {
+        setName(currentUser.name);
+        setDescription(currentUser.about);
+      }, [currentUser]);  
+
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        handleUpdateUser({ name, about: description });
+      };
     
+      const handleNameChange = (event) => {
+        setName(event.target.value);
+      };
+    
+      const handleDescriptionChange = (event) => {
+        setDescription(event.target.value);
+      };
+
     return (
-        <form className="popup__form form" name="register">
+          <form className="popup__form form" name="register" onSubmit={handleSubmit}>
+
             <h3 className="popup__EditarPerfil">Editar perfil</h3>
 
             <div className="form__input"> 
@@ -13,7 +39,10 @@ export default function EditProfile() {
                     name="name" 
                     minLength="2" 
                     maxLength="40" 
-                    required/> 
+                    required
+                    value={name}
+                    onChange={handleNameChange}
+                    /> 
                     <span className="form-input-error form__input-name popup__form-name-error"></span>
             </div>
 
@@ -25,7 +54,10 @@ export default function EditProfile() {
                 name="explorar" 
                 minLength="2" 
                 maxLength="200" 
-                required/>
+                required
+                value={description}
+                onChange={handleDescriptionChange}
+                />
                 <span className="form-input-error form__input-explorar popup__form-name-error"></span>
             </div>
     
