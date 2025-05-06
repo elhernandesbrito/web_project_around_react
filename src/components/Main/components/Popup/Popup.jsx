@@ -1,5 +1,5 @@
 import React from "react";
-import closeIcon from "../../../../assets/images/closeIcon.png";
+
 
 export default function Popup({ children, onClose, hideCloseButton }) {
   return (
